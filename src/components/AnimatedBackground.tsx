@@ -1,38 +1,54 @@
-import React from 'react';
-import {AbsoluteFill, Img, interpolate, useCurrentFrame, useVideoConfig} from 'remotion';
+import React from "react";
+import {AbsoluteFill, interpolate, useCurrentFrame} from "remotion";
 
 export const AnimatedBackground: React.FC = () => {
   const frame = useCurrentFrame();
-  const {durationInFrames} = useVideoConfig();
 
-  const driftX = interpolate(frame, [0, durationInFrames], [-40, 40]);
-  const opacityPulse = interpolate(frame % 120, [0, 60, 120], [0.2, 0.38, 0.2]);
+  const moveA = interpolate(frame, [0, 1350], [-120, 120]);
+  const moveB = interpolate(frame, [0, 1350], [120, -120]);
+  const opacity = interpolate(frame, [0, 60, 1290, 1350], [0, 1, 1, 0]);
 
   return (
-    <AbsoluteFill style={{backgroundColor: '#081624'}}>
-      <Img
-        src="/background.jpg"
+    <AbsoluteFill
+      style={{
+        background:
+          "linear-gradient(135deg, #07111f 0%, #0b1f33 38%, #102f46 70%, #07111f 100%)",
+        overflow: "hidden",
+      }}
+    >
+      <div
         style={{
-          width: '110%',
-          height: '110%',
-          objectFit: 'cover',
-          transform: `translate(${driftX}px, -20px)`,
-          filter: 'brightness(0.35) saturate(0.9)'
-        }}
-      />
-      <AbsoluteFill
-        style={{
+          position: "absolute",
+          inset: 0,
+          opacity,
           background:
-            'radial-gradient(circle at 20% 20%, rgba(50, 132, 186, 0.2), transparent 40%), linear-gradient(180deg, rgba(3,10,18,0.45) 0%, rgba(3,10,18,0.85) 100%)'
+            "radial-gradient(circle at 20% 20%, rgba(40, 130, 180, 0.30), transparent 34%), radial-gradient(circle at 80% 60%, rgba(180, 25, 45, 0.18), transparent 30%)",
+          transform: `translateX(${moveA}px)`,
         }}
       />
-      <AbsoluteFill
+
+      <div
         style={{
-          opacity: opacityPulse,
+          position: "absolute",
+          width: 900,
+          height: 900,
+          borderRadius: "50%",
+          right: -420 + moveB,
+          top: 180,
           background:
-            'linear-gradient(120deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0) 35%, rgba(255,255,255,0.04) 65%, rgba(255,255,255,0) 100%)'
+            "radial-gradient(circle, rgba(255,255,255,0.10), rgba(255,255,255,0.02) 45%, transparent 70%)",
+          filter: "blur(2px)",
         }}
       />
-    </AbsoluteFill>
-  );
-};
+
+      <div
+        style={{
+          position: "absolute",
+          left: -260 + moveA,
+          bottom: -180,
+          width: 720,
+          height: 720,
+          borderRadius: "50%",
+          background:
+            "radial-gradient(circle, rgba(38, 166, 210, 0.20), rgba(38, 166, 210, 0.04) 50%, transparent 72%)",
+        }}
