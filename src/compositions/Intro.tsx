@@ -1,20 +1,150 @@
-import React from 'react';
-import {AbsoluteFill, Img, interpolate, spring, useCurrentFrame, useVideoConfig} from 'remotion';
+import React from "react";
+import {AbsoluteFill, interpolate, useCurrentFrame} from "remotion";
+import {AnimatedBackground} from "../components/AnimatedBackground";
 
-export const Intro: React.FC<{title: string}> = ({title}) => {
+const NewsLogo: React.FC = () => {
+  return (
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: 14,
+      }}
+    >
+      <div
+        style={{
+          width: 64,
+          height: 64,
+          borderRadius: 16,
+          background: "linear-gradient(135deg, #e31b3f, #0ea5e9)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          color: "white",
+          fontSize: 30,
+          fontWeight: 900,
+          letterSpacing: -2,
+          boxShadow: "0 14px 40px rgba(0,0,0,0.35)",
+        }}
+      >
+        N
+      </div>
+
+      <div style={{display: "flex", flexDirection: "column", lineHeight: 1}}>
+        <span
+          style={{
+            color: "white",
+            fontSize: 34,
+            fontWeight: 900,
+            letterSpacing: -1,
+          }}
+        >
+          NEWS
+        </span>
+
+        <span
+          style={{
+            color: "rgba(255,255,255,0.72)",
+            fontSize: 15,
+            fontWeight: 700,
+            letterSpacing: 2,
+            marginTop: 6,
+          }}
+        >
+          28 MAIO 2026
+        </span>
+      </div>
+    </div>
+  );
+};
+
+export const Intro: React.FC = () => {
   const frame = useCurrentFrame();
-  const {fps} = useVideoConfig();
-  const zoom = interpolate(frame, [0, 120], [1.08, 1], {extrapolateRight: 'clamp'});
-  const rise = spring({frame, fps, durationInFrames: 35});
+
+  const titleY = interpolate(frame, [0, 45], [60, 0], {
+    extrapolateRight: "clamp",
+  });
+
+  const opacity = interpolate(frame, [0, 30, 105, 120], [0, 1, 1, 0], {
+    extrapolateRight: "clamp",
+  });
 
   return (
-    <AbsoluteFill style={{justifyContent: 'center', alignItems: 'center', padding: 80}}>
-      <Img src="/logo.png" style={{width: 170, marginBottom: 38, opacity: interpolate(frame, [0, 20], [0, 1]), transform: `scale(${zoom})`}} />
-      <div style={{fontSize: 32, letterSpacing: 3, color: '#7cc6ff', fontWeight: 700, marginBottom: 20}}>EDIÇÃO ESPECIAL</div>
-      <div style={{fontSize: 72, lineHeight: 1.12, textAlign: 'center', color: '#ffffff', fontWeight: 650, transform: `translateY(${interpolate(rise, [0, 1], [60, 0])}px)`}}>
-        {title}
+    <AbsoluteFill>
+      <AnimatedBackground />
+
+      <div
+        style={{
+          position: "absolute",
+          top: 90,
+          left: 70,
+          opacity,
+        }}
+      >
+        <NewsLogo />
       </div>
-      <div style={{position: 'absolute', top: 70, right: 80, color: '#d2def0', fontSize: 28}}>20:26 BRT</div>
+
+      <div
+        style={{
+          position: "absolute",
+          left: 70,
+          right: 70,
+          top: 520,
+          opacity,
+          transform: `translateY(${titleY}px)`,
+        }}
+      >
+        <div
+          style={{
+            color: "#e31b3f",
+            fontSize: 28,
+            fontWeight: 800,
+            letterSpacing: 4,
+            textTransform: "uppercase",
+            marginBottom: 22,
+          }}
+        >
+          Edição Especial
+        </div>
+
+        <h1
+          style={{
+            margin: 0,
+            color: "white",
+            fontSize: 82,
+            lineHeight: 0.95,
+            fontWeight: 900,
+            letterSpacing: -4,
+            maxWidth: 840,
+          }}
+        >
+          Resumo das Notícias
+        </h1>
+
+        <div
+          style={{
+            marginTop: 34,
+            color: "rgba(255,255,255,0.78)",
+            fontSize: 34,
+            fontWeight: 500,
+          }}
+        >
+          Brasil e Mundo · 28 de maio de 2026
+        </div>
+      </div>
+
+      <div
+        style={{
+          position: "absolute",
+          left: 70,
+          right: 70,
+          bottom: 120,
+          height: 2,
+          background:
+            "linear-gradient(90deg, #e31b3f, rgba(255,255,255,0.65), transparent)",
+          opacity,
+        }}
+      />
     </AbsoluteFill>
   );
 };
