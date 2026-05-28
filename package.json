@@ -1,0 +1,25 @@
+{
+  "name": "projeto",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Vídeo jornalístico vertical de 45s com Remotion + React + TypeScript.",
+  "scripts": {
+    "dev": "remotion studio src/index.ts",
+    "build": "remotion bundle src/index.ts",
+    "render": "remotion render src/index.ts NewsVideo out/final-news-video.mp4 --codec=h264 --overwrite"
+  },
+  "dependencies": {
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "remotion": "^4.0.387"
+  },
+  "devDependencies": {
+    "@remotion/cli": "^4.0.387",
+    "@types/react": "^19.1.5",
+    "@types/react-dom": "^19.1.5",
+    "typescript": "^5.8.3"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
