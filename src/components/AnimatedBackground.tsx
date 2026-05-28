@@ -52,3 +52,28 @@ export const AnimatedBackground: React.FC = () => {
           background:
             "radial-gradient(circle, rgba(38, 166, 210, 0.20), rgba(38, 166, 210, 0.04) 50%, transparent 72%)",
         }}
+      />
+
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          backgroundImage:
+            "linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px)",
+          backgroundSize: "80px 80px",
+          opacity: 0.22,
+        }}
+      />
+
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          background:
+            "linear-gradient(180deg, rgba(0,0,0,0.15), rgba(0,0,0,0.35))",
+        }}
+      />
+    </AbsoluteFill>
+  );
+};
+};
